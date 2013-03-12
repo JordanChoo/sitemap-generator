@@ -42,8 +42,7 @@ class GenericSitemap
 		$xml = simplexml_load_file($url);
 		$node_count =  $xml->count();
 		// Count the nodes
-		if($node_count >= 5)
-		// if($node_count >= 50000)
+		if($node_count >= 50000)
 		{
 			$sitemap_name = $this->increment_sitemap($config['sitemap_name'], $sitemap_folder);
 			// // Create the sitemap
