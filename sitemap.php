@@ -45,7 +45,7 @@ class GenericSitemap
 		if($node_count >= 5)
 		// if($node_count >= 50000)
 		{
-			$sitemap_name = $this->next_sitemap($config['sitemap_name'], $sitemap_folder);
+			$sitemap_name = $this->increment_sitemap($config['sitemap_name'], $sitemap_folder);
 			// // Create the sitemap
 			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
 		}
@@ -99,7 +99,7 @@ class GenericSitemap
 
 		return $sitemap_name."_".$offset;
 	}
-	private function next_sitemap($sitemap_name, $sitemap_folder, $offset = 1)
+	private function increment_sitemap($sitemap_name, $sitemap_folder, $offset = 1)
 	{
 		$current = $this->current_sitemap($sitemap_name, $sitemap_folder);
 
