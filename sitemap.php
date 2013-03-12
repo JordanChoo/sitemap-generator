@@ -26,52 +26,54 @@ class GenericSitemap
 		{
 			// Create a sitemap folder
 			mkdir($sitemap_folder) or die('Unable to create sitemap folder: '.$sitemap_folder);
+			echo "good bye";
 		}
 		
 		// Check for the name of the sitemap
 
 		// Check if the sitemap exists
-		if(!file_exists($sitemap_folder.'/'.$sitemap_name))
+		if(!file_exists($sitemap_folder.'/'.$sitemap_name.".xml"))
 		{
 			// Create the sitemap
 			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			echo "hello";
 		}
 		
 		// Check the # of nodes in the sitemap 
-		$xml = new SimpleXmlElement("<urlset></urlset>");
+		$url = $sitemap_folder.'/'.$sitemap_name.'.xml';
+		$xml = simplexml_load_file($url);
 		// Count the nodes
-		$node_count = $xml->count();
 		// Check if the node count is at/over the limit
-		if($node_count <= 50000)
-		{
-			// count the number of sitemaps in the folder with the same name
-			$folder_data = opendir($sitemap_folder);
-			// create an empty array
-			$sitemap_folder_content = array();
-			while (false !== ($entry = readdir($folder_data))) {
-		        $sitemap_folder_content[] =  $entry;
-		    }
-			$count = 0;
-			foreach ($sitemap_folder_content as $sitemap) 
-			{
-				strpos($sitemap, $sitemap_name) or $count++;
-			}
-			if($count == 0)
-			{
-				$count++;
-			}
-			// Create a file that has the above calculated number appended to it with an _ as the seperator
-				// i.e. videos_1.xml
+		// if($node_count >= 50000)
+		// {
+		// 	// count the number of sitemaps in the folder with the same name
+		// 	$folder_data = opendir($sitemap_folder);
+		// 	// create an empty array
+		// 	$sitemap_folder_content = array();
+		// 	while (false !== ($entry = readdir($folder_data))) {
+		//         $sitemap_folder_content[] =  $entry;
+		//     }
+		// 	$count = 0;
+		// 	foreach ($sitemap_folder_content as $sitemap) 
+		// 	{
+		// 		strpos($sitemap, $sitemap_name) or $count++;
+		// 	}
+		// 	if($count == 0)
+		// 	{
+		// 		$count++;
+		// 	}
+		// 	// Create a file that has the above calculated number appended to it with an _ as the seperator
+		// 		// i.e. videos_1.xml
 
-			// The following two lines are courtesy of:
-				// Of FuelPHP's Str::increment() function
-			preg_match('/(.+)'.'_'.'([0-9]+)$/', $sitemap_name, $match);
-			$sitemap_name =  isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $sitemap_name.'_'.$count;
-			// Create the sitemap
-			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
-		}
+		// 	// The following two lines are courtesy of:
+		// 		// Of FuelPHP's Str::increment() function
+		// 	preg_match('/(.+)'.'_'.'([0-9]+)$/', $sitemap_name, $match);
+		// 	$sitemap_name =  isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $sitemap_name.'_'.$count;
+		// 	// Create the sitemap
+		// 	$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+		// }
 		// Append the date to the sitemap
-		$this->append_sitemap($sitemap_folder.'/'.$sitemap_name, $url, $config);
+		$this->append_sitemap($sitemap_folder.'/'.$sitemap_name, $config);
 	}
 
 	// Create sitemap function
@@ -97,32 +99,19 @@ class GenericSitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	private function append_sitemap($sitemap_name, $url, $config)
+	public function append_sitemap($sitemap_name, $config)
 	{
-		var_dump($config);
-		/* CONFIG EXAMPLE
-
-		$confg = array(
-				'type' => "url",
-				'params' => array(
-						'loc' => 'http://example.com',
-						'changefreq' => 'daily',
-						'priority' => '0.9',
-					),
-			);
-
-		*/
-
 		$sitemap_name .= ".xml";
 		//Load the XML file
 		$xml = simplexml_load_file($sitemap_name);
 		//Create a node
 		$url = $xml->addChild($config['type']);
-		//Set the location of the URL
+		// //Set the location of the URL
 		foreach ($config['params'] as $param => $value) 
 		{
 			$url->addChild($param, $value);
 		}
+
 		//Save the XML
 		$xml->asXML($sitemap_name);
 		return true;
