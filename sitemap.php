@@ -3,7 +3,7 @@
 /**
 * 
 */
-class Sitemap
+class Generic_Sitemap
 {
 	// Variables
 		//Just the name of the folder
