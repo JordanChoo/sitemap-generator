@@ -3,7 +3,7 @@
 /**
 * 
 */
-class Generic_Sitemap
+class GenericSitemap
 {
 	// Variables
 		//Just the name of the folder
@@ -16,10 +16,11 @@ class Generic_Sitemap
 		# code...
 	}
 
-	function sitemap()
+	function sitemap($config)
 	{
-		// state the sitemap folder
-		
+		$sitemap_folder = $config['sitemap_folder'];
+		$sitemap_name = $config['sitemap_name'];
+		$url = $config['params']['loc'];
 		// Check if the sitemap folder exists
 		if(!is_dir($sitemap_folder))
 		{
@@ -33,18 +34,23 @@ class Generic_Sitemap
 		if(!file_exists($sitemap_folder.'/'.$sitemap_name))
 		{
 			// Create the sitemap
-			create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
 		}
 		
 		// Check the # of nodes in the sitemap 
-		$xml = new SimpleXmlElement($variable_GOES_HERE);
+		$xml = new SimpleXmlElement("<urlset></urlset>");
 		// Count the nodes
 		$node_count = $xml->count();
 		// Check if the node count is at/over the limit
 		if($node_count <= 50000)
 		{
 			// count the number of sitemaps in the folder with the same name
-			$sitemap_folder_content = readdir($sitemap_folder);
+			$folder_data = opendir($sitemap_folder);
+			// create an empty array
+			$sitemap_folder_content = array();
+			while (false !== ($entry = readdir($folder_data))) {
+		        $sitemap_folder_content[] =  $entry;
+		    }
 			$count = 0;
 			foreach ($sitemap_folder_content as $sitemap) 
 			{
@@ -62,24 +68,25 @@ class Generic_Sitemap
 			preg_match('/(.+)'.'_'.'([0-9]+)$/', $sitemap_name, $match);
 			$sitemap_name =  isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $sitemap_name.'_'.$count;
 			// Create the sitemap
-			create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
 		}
 		// Append the date to the sitemap
-		append_sitemap($sitemap_folder.'/'.$sitemap_name, $url, $config);
+		$this->append_sitemap($sitemap_folder.'/'.$sitemap_name, $url, $config);
 	}
 
 	// Create sitemap function
-	function create_sitemap($sitemap_name)
+	private function create_sitemap($sitemap_name)
 	{
 		$sitemap_name .= ".xml";
 		// Create the sitemap
-		if(!fopen($sitemap_name, "w")) 
+		$open_map = fopen($sitemap_name, "w");
+		if(!$open_map) 
 		{
 			// if there was an error
 			return false;
 		}
 		// Close the file
-		fclose($sitemap_name);
+		fclose($open_map );
 		// Create the "empty" sitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
@@ -90,8 +97,9 @@ class Generic_Sitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	function append_sitemap($sitemap_name, $url, $confg)
+	private function append_sitemap($sitemap_name, $url, $config)
 	{
+		var_dump($config);
 		/* CONFIG EXAMPLE
 
 		$confg = array(
@@ -124,7 +132,7 @@ class Generic_Sitemap
 /**
 * 
 */
-class Core_Sitemap extends Sitemap
+class CoreSitemap extends GenericSitemap
 {
 	
 	function __construct($argument)
@@ -136,7 +144,7 @@ class Core_Sitemap extends Sitemap
 /**
 * 
 */
-class Video_Sitemap extends Sitemap
+class VideoSitemap extends GenericSitemap
 {
 	
 	function __construct($argument)
@@ -147,7 +155,7 @@ class Video_Sitemap extends Sitemap
 /**
 * 
 */
-class Image_Sitemap extends Sitemap
+class ImageSitemap extends GenericSitemap
 {
 	function __construct($argument)
 	{
