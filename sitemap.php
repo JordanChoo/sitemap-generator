@@ -144,7 +144,9 @@ class Video_Sitemap extends Sitemap
 		# code...
 	}
 }
-
+/**
+* 
+*/
 class Image_Sitemap extends Sitemap
 {
 	function __construct($argument)
