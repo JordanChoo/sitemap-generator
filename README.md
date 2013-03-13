@@ -11,10 +11,10 @@ To start generating a generic sitemap you can use the following code:
 	$SitemapNode = new Sitemap('SitemapFolder', 'NameOfSitemap');
 
 	$config = array(
-			'type' => 'url',
+			'type'   => 'url',
 			'params' => array(
-					'loc' => 'http://example.com',
-					'freq' => 'daily',
+					'loc'      => 'http://example.com',
+					'freq'     => 'daily',
 					'priority' => '0.5',
 				),
 		);
@@ -47,3 +47,8 @@ Additionally, it will automatically create a core sitemap called "core.xml" in t
 	</sitemapindex>
 ```
 As a note whenever a new sitemap is created the core.xml file will be automatically updated with the new entry of the sitemap.
+
+## Images in sitemap
+
+
+## Videos in sitemap
