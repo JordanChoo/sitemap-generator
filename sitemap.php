@@ -53,7 +53,7 @@ class GenericSitemap
 		$core_config = array(
 				'type' => 'sitemap',
 				'params' => array(
-						'loc' =>  $this->sitemap_folder."/".$this->sitemap_name,
+						'loc' =>  $this->sitemap_folder."/".$this->sitemap_name.".xml",
 					),
 			);
 		$this->add_core($core_config);
