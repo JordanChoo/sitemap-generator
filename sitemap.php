@@ -11,10 +11,7 @@ class GenericSitemap
 		$this->sitemap_folder = $sitemap_folder;
 		$this->sitemap_name = $sitemap_name;
 		$this->sitemap_uri = $sitemap_folder."/".$sitemap_name;
-	}
 
-	public function sitemap($config)
-	{
 		// Check if the sitemap folder exists
 		if(!is_dir($this->sitemap_folder))
 		{
@@ -28,19 +25,7 @@ class GenericSitemap
 			// Create the sitemap
 			$this->create_sitemap($this->sitemap_uri);
 		}
-		// Check the # of nodes in the sitemap 
-		$url = $this->sitemap_uri.'.xml';
-		$xml = simplexml_load_file($url);
-		$node_count =  $xml->count();
-		// Count the nodes
-		if($node_count >= 50000)
-		{
-			$this->sitemap_uri = $this->sitemap_folder.'/'.$this->increment_sitemap();
-			// Create the sitemap
-			$this->create_sitemap($this->sitemap_uri) or die("Unable to create the sitemap");
-		}
-		// Append the date to the sitemap
-		$this->append_sitemap($this->sitemap_uri, $config);
+
 	}
 
 	// Create sitemap function
@@ -101,20 +86,31 @@ class GenericSitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	private function append_sitemap($sitemap_name, $config)
+	public function append_sitemap($config)
 	{
-		$sitemap_name .= ".xml";
+		// Check the # of nodes in the sitemap 
+		$url = $this->sitemap_uri.'.xml';
+		$xml = simplexml_load_file($url);
+		$node_count =  $xml->count();
+		// Count the nodes
+		if($node_count >= 50000)
+		{
+			$this->sitemap_uri = $this->sitemap_folder.'/'.$this->increment_sitemap();
+			// Create the sitemap
+			$this->create_sitemap($this->sitemap_uri) or die("Unable to create the sitemap");
+		}
+		$this->sitemap_uri .= ".xml";
 		//Load the XML file
-		$xml = simplexml_load_file($sitemap_name);
+		$xml = simplexml_load_file($this->sitemap_uri);
 		//Create a node
-		$url = $xml->addChild($config['type']);
+		$node = $xml->addChild($config['type']);
 		// //Set the location of the URL
 		foreach ($config['params'] as $param => $value) 
 		{
-			$url->addChild($param, $value);
+			$node->addChild($param, $value);
 		}
 		//Save the XML
-		$xml->asXML($sitemap_name);
+		$xml->asXML($this->sitemap_uri);
 		return true;
 	}
 }
