@@ -165,16 +165,6 @@ class GenericSitemap
 }
 
 /**
-*
-*/
-class CoreSitemap extends GenericSitemap
-{
-
-	// Create sitemap function
-	
-}
-
-/**
 * 
 */
 class VideoSitemap extends GenericSitemap
