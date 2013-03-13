@@ -1,5 +1,7 @@
 # Sitemap Library
 
+This library allows the user to create a scalable generic, video and image based sitemaps.
+
 ##Generic Sitemap
 
 To start generating a generic sitemap you can use the following code:
