@@ -3,7 +3,7 @@
 /**
 * 
 */
-class GenericSitemap
+class Sitemap
 {
 
 	function __construct($sitemap_folder, $sitemap_name, $sitemap_type = 'generic')
