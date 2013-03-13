@@ -15,35 +15,33 @@ class GenericSitemap
 
 	function sitemap($config)
 	{
-		$sitemap_folder = $config['sitemap_folder'];
-		$sitemap_name = $config['sitemap_name'];
 		$url = $config['params']['loc'];
 		// Check if the sitemap folder exists
-		if(!is_dir($sitemap_folder))
+		if(!is_dir($this->sitemap_folder))
 		{
 			// Create a sitemap folder
-			mkdir($sitemap_folder) or die('Unable to create sitemap folder: '.$sitemap_folder);
+			mkdir($this->sitemap_folder) or die('Unable to create sitemap folder: '.$this->sitemap_folder);
 		}
-		$sitemap_name = $this->current_sitemap($sitemap_name, $sitemap_folder);
+		$sitemap_name = $this->current_sitemap($sitemap_name, $this->sitemap_folder);
 		// Check if the sitemap exists
-		if(!file_exists($sitemap_folder.'/'.$sitemap_name.".xml"))
+		if(!file_exists($this->sitemap_uri".xml"))
 		{
 			// Create the sitemap
-			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name);
+			$this->create_sitemap($this->sitemap_uri);
 		}
 		// Check the # of nodes in the sitemap 
-		$url = $sitemap_folder.'/'.$sitemap_name.'.xml';
+		$url = $this->sitemap_uri.'.xml';
 		$xml = simplexml_load_file($url);
 		$node_count =  $xml->count();
 		// Count the nodes
 		if($node_count >= 50000)
 		{
-			$sitemap_name = $this->increment_sitemap($config['sitemap_name'], $sitemap_folder);
+			$sitemap_name = $this->increment_sitemap($config['sitemap_name'], $this->sitemap_folder);
 			// // Create the sitemap
-			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			$this->create_sitemap($this->sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
 		}
 		// Append the date to the sitemap
-		$this->append_sitemap($sitemap_folder.'/'.$sitemap_name, $config);
+		$this->append_sitemap($this->sitemap_folder.'/'.$sitemap_name, $config);
 	}
 
 	// Create sitemap function
