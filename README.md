@@ -17,6 +17,6 @@ To start generating a generic sitemap you can use the following code:
 				),
 		);
 
-	$SitemapNode->sitemap($config);
+	$SitemapNode->add_node($config);
 
 ```
