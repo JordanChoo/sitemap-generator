@@ -26,11 +26,11 @@ class GenericSitemap
 		}
 		$this->sitemap_uri = $this->sitemap_folder.'/'.$this->current_sitemap();
 		// Check if the sitemap exists
-		if(!file_exists($this->sitemap_uri.".xml"))
-		{
-			// Create the sitemap
-			$this->create_sitemap($this->sitemap_uri);
-		}
+		// if(!file_exists($this->sitemap_uri.".xml"))
+		// {
+		// 	// Create the sitemap
+		// 	$this->create_sitemap($this->sitemap_uri);
+		// }
 	}
 
 	// Create sitemap function
@@ -169,10 +169,49 @@ class GenericSitemap
 */
 class VideoSitemap extends GenericSitemap
 {
-	
-	function __construct($argument)
+
+
+	function __construct($sitemap_folder, $sitemap_name)
 	{
-		# code...
+		parent::__construct($sitemap_folder, $sitemap_name);
+		// Check if the sitemap exists
+		if(!file_exists($this->sitemap_uri.".xml"))
+		{
+			// Create the sitemap
+			$this->create_image($this->sitemap_uri);
+		}
+		
+		
+
+		return true;
+	}
+
+	private function create_image($sitemap_uri)
+	{
+		$sitemap_uri .= ".xml";
+		// Create the sitemap
+		$open_map = fopen($sitemap_uri, "w");
+		if(!$open_map) 
+		{
+			// if there was an error
+			return false;
+		}
+		// Close the file
+		fclose($open_map);
+		// Create the "empty" sitemap
+		$create_xml = new SimpleXMLElement('<urlset></urlset>');
+		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		$create_xml->addAttribute("xmlns:image", "http://www.google.com/schemas/sitemap-image/1.1", '');
+		$create_xml->asXML($sitemap_uri);
+		file_put_contents($sitemap_uri,preg_replace('/xmlns:xmlns=""\s?/', '',file_get_contents($sitemap_uri)));
+		
+		// Show that it was success
+		return true;
+	}
+
+	public function add_image($config)
+	{
+		// Auto scaling goes here
 	}
 }
 /**
