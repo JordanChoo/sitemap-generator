@@ -121,14 +121,6 @@ class GenericSitemap
 class CoreSitemap extends GenericSitemap
 {
 
-	function __construct($sitemap_folder, $sitemap_name)
-	{
-		$this->sitemap_folder = $sitemap_folder;
-		$this->sitemap_name = $sitemap_name;
-		$this->sitemap_uri = $sitemap_folder."/".$sitemap_name;
-
-	}
-
 	// Create sitemap function
 	public function create_sitemap()
 	{
