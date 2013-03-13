@@ -25,6 +25,12 @@ class GenericSitemap
 			// Create the sitemap
 			$this->create_sitemap($this->sitemap_uri);
 		}
+		// Check if the core exists
+		if(!file_exists($sitemap_folder."/core.xml"))
+		{
+			// Create the core
+			$this->create_core($sitemap_folder);
+		}
 
 	}
 
@@ -45,15 +51,13 @@ class GenericSitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 		$create_xml->asXML($sitemap_uri);
-
-		$core = new CoreSitemap('sitemaps', 'CoreSitemap');
 		$core_config = array(
 				'type' => 'sitemap',
 				'params' => array(
-						'loc' => $this->sitemap_uri,
+						'loc' =>  $this->sitemap_folder."/".$this->sitemap_name,
 					),
 			);
-		$core->add_node($core_config);
+		$this->add_node($core_config);
 		// Show that it was success
 		return true;
 	}
@@ -122,6 +126,26 @@ class GenericSitemap
 		$xml->asXML($this->sitemap_uri);
 		return true;
 	}
+
+	private function create_core($sitemap_folder)
+	{
+		$core_uri = $sitemap_folder."/core.xml";
+		// Create the sitemap
+		$open_map = fopen($core_uri, "w");
+		if(!$open_map) 
+		{
+			// if there was an error
+			return false;
+		}
+		// Close the file
+		fclose($open_map);
+		// Create the "empty" sitemap
+		$create_xml = new SimpleXMLElement('<sitemapindex></sitemapindex>');
+		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		$create_xml->asXML($core_uri);
+		// Show that it was success
+		return true;
+	}
 }
 
 /**
@@ -131,25 +155,7 @@ class CoreSitemap extends GenericSitemap
 {
 
 	// Create sitemap function
-	public function create_sitemap()
-	{
-		$this->sitemap_uri .= ".xml";
-		// Create the sitemap
-		$open_map = fopen($this->sitemap_uri, "w");
-		if(!$open_map) 
-		{
-			// if there was an error
-			return false;
-		}
-		// Close the file
-		fclose($open_map );
-		// Create the "empty" sitemap
-		$create_xml = new SimpleXMLElement('<sitemapindex></sitemapindex>');
-		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
-		$create_xml->asXML($this->sitemap_uri);
-		// Show that it was success
-		return true;
-	}
+	
 }
 
 /**
