@@ -2,6 +2,16 @@
 
 This library allows the user to create a scalable generic, video and image based sitemaps.
 
+When creating a sitemap object it accepts three inputs which are 
+
+```php
+$sitemap = new Sitemap('FolderOfSitemap', 'NameOfSitemap', 'TypeOfSitemap')
+```
+NOTE: For the type of sitemap it accepts only three types which are:
+- 'generic'
+- 'video'
+- 'image'
+
 ##Generic Sitemap
 
 To start generating a generic sitemap you can use the following code:
@@ -49,6 +59,8 @@ Additionally, it will automatically create a core sitemap called "core.xml" in t
 As a note whenever a new sitemap is created the core.xml file will be automatically updated with the new entry of the sitemap.
 
 ## Images in sitemap
+
+
 
 
 ## Videos in sitemap
