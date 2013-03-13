@@ -79,7 +79,7 @@ If you'd like to build a sitemap with image files in it, you would do the follow
 	$SitemapNode->add_node($config);
 ```
 
-The results would be the creationg of the following sitemap (assuming that one hasn't been created previously):
+Just like the default sitemap a core sitemap file is automatically created in the sitemap folder that you specified to allow for auto sitemap scaling. The results would be the creation of the following sitemap (assuming that one hasn't been created previously). 
 
 ```xml
 	<?xml version="1.0"?>
