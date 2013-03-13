@@ -18,6 +18,12 @@ class GenericSitemap
 			// Create a sitemap folder
 			mkdir($this->sitemap_folder) or die('Unable to create sitemap folder: '.$this->sitemap_folder);
 		}
+		// Check if the core exists
+		if(!file_exists($sitemap_folder."/core.xml"))
+		{
+			// Create the core
+			$this->create_core($sitemap_folder);
+		}
 		$this->sitemap_uri = $this->sitemap_folder.'/'.$this->current_sitemap();
 		// Check if the sitemap exists
 		if(!file_exists($this->sitemap_uri.".xml"))
@@ -25,13 +31,6 @@ class GenericSitemap
 			// Create the sitemap
 			$this->create_sitemap($this->sitemap_uri);
 		}
-		// Check if the core exists
-		if(!file_exists($sitemap_folder."/core.xml"))
-		{
-			// Create the core
-			$this->create_core($sitemap_folder);
-		}
-
 	}
 
 	// Create sitemap function
