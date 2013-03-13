@@ -35,3 +35,15 @@ It will create the following XML in a folder callder "SitemapFolder" with the na
 		</url>
 	</urlset>
 ```
+
+Additionally, it will automatically create a core sitemap called "core.xml" in the folder that you specified earlier which in this case would be "SitemapFolder", the contents would be:
+
+```xml
+<?xml version="1.0"?>
+	<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+		<sitemap>
+			<loc>SitemapFolder/NameOfSitemap_1.xml</loc>
+		</sitemap>
+	</sitemapindex>
+```
+As a note whenever a new sitemap is created the core.xml file will be automatically updated with the new entry of the sitemap.
