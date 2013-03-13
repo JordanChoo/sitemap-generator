@@ -86,7 +86,7 @@ class GenericSitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	public function append_sitemap($config)
+	public function add_node($config)
 	{
 		// Check the # of nodes in the sitemap 
 		$url = $this->sitemap_uri.'.xml';
@@ -116,11 +116,7 @@ class GenericSitemap
 }
 
 /**
-*<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-*	<sitemap>
-*		<loc>http://www.pornhub.com/sitemap_core.xml</loc>
-*	</sitemap>
-*</sitemapindex>
+*
 */
 class CoreSitemap extends GenericSitemap
 {
