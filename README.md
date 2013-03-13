@@ -17,7 +17,6 @@ NOTE: For the type of sitemap it accepts only three types which are:
 To start generating a generic sitemap you can use the following code:
 
 ```php
-
 	$SitemapNode = new Sitemap('SitemapFolder', 'NameOfSitemap');
 
 	$config = array(
@@ -30,7 +29,6 @@ To start generating a generic sitemap you can use the following code:
 		);
 
 	$SitemapNode->add_node($config);
-
 ```
 
 It will create the following XML in a folder callder "SitemapFolder" with the name of 'NameOfSitemap_1.xml'
@@ -63,7 +61,6 @@ As a note whenever a new sitemap is created the core.xml file will be automatica
 If you'd like to build a sitemap with image files in it, you would do the following:
 
 ```php
-
 	$SitemapNode = new Sitemap('SitemapFolder', 'NameOfSitemap', 'image');
 
 	$config = array(
@@ -91,7 +88,6 @@ Just like the default sitemap a core sitemap file is automatically created in th
 				</image:image>
 			</url>
 		</urlset>
-
 ```
 
 
