@@ -48,24 +48,21 @@ class Sitemap
 		// Close the file
 		fclose($open_sitemap_folder);
 		// Create the "empty" sitemap
+		$create_xml = new SimpleXMLElement('<urlset></urlset>');
+		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 		switch ($this->sitemap_type) {
 			case 'image':
-					$create_xml = new SimpleXMLElement('<urlset></urlset>');
-					$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+					
 					$create_xml->addAttribute("xmlns:image", "http://www.google.com/schemas/sitemap-image/1.1", '');
 					$create_xml->asXML($sitemap_uri);
 					file_put_contents($sitemap_uri,preg_replace('/xmlns:xmlns=""\s?/', '',file_get_contents($sitemap_uri)));
 				break;
 			case "video":
-					$create_xml = new SimpleXMLElement('<urlset></urlset>');
-					$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 					$create_xml->addAttribute("xmlns:video", "http://www.google.com/schemas/sitemap-video/1.1", '');
 					$create_xml->asXML($sitemap_uri);
 					file_put_contents($sitemap_uri,preg_replace('/xmlns:xmlns=""\s?/', '',file_get_contents($sitemap_uri)));
 				break;
 			default:
-					$create_xml = new SimpleXMLElement('<urlset></urlset>');
-					$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 					$create_xml->asXML($sitemap_uri);
 				break;
 		}
