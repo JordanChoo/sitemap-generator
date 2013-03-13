@@ -96,16 +96,14 @@ class GenericSitemap
 		$current = $this->current_sitemap($this->sitemap_name, $this->sitemap_folder);
 
 		preg_match('/(.+)'.'_'.'([0-9]+)$/', $current, $match);
-		$this->sitemap_name =  isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $this->sitemap_name.'_'.$offset;
-
-		return $this->sitemap_name;
+		return isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $this->sitemap_name.'_'.$offset;
 	}
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	private function append_sitemap($sitemap_name, $config)
+	private function append_sitemap($config)
 	{
-		$sitemap_name .= ".xml";
+		$sitemap_name = $this->sitemap_name.".xml";
 		//Load the XML file
 		$xml = simplexml_load_file($sitemap_name);
 		//Create a node
