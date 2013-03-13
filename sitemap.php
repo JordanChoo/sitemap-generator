@@ -188,16 +188,4 @@ class GenericSitemap
 	}
 }
 
-/**
-* 
-*/
-class ImageSitemap extends GenericSitemap
-{
-	function __construct($argument)
-	{
-		# code...
-	}
-}
-
-
 ?>
