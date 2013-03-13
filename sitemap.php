@@ -6,10 +6,12 @@
 class GenericSitemap
 {
 
-	// function __construct($config)
-	// {
-	// 	# code...
-	// }
+	function __construct($sitemap_folder, $sitemap_name)
+	{
+		$this->sitemap_folder = $sitemap_folder;
+		$this->sitemap_name = $sitemap_name;
+		$this->sitemap_uri = $sitemap_folder."/".$sitemap_name;
+	}
 
 	function sitemap($config)
 	{
@@ -144,7 +146,6 @@ class CoreSitemap extends GenericSitemap
 	// Create sitemap function
 	public function create_sitemap()
 	{
-
 		$this->sitemap_uri .= ".xml";
 		// Create the sitemap
 		$open_map = fopen($this->sitemap_uri, "w");
