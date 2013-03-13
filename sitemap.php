@@ -47,9 +47,9 @@ class GenericSitemap
 	// Create sitemap function
 	private function create_sitemap()
 	{
-		$this->sitemap_name .= ".xml";
+		$this->sitemap_uri .= ".xml";
 		// Create the sitemap
-		$open_map = fopen($this->sitemap_name, "w");
+		$open_map = fopen($this->sitemap_uri, "w");
 		if(!$open_map) 
 		{
 			// if there was an error
@@ -60,7 +60,7 @@ class GenericSitemap
 		// Create the "empty" sitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
-		$create_xml->asXML($this->sitemap_name);
+		$create_xml->asXML($this->sitemap_uri);
 		// Show that it was success
 		return true;
 	}
