@@ -21,7 +21,7 @@ class GenericSitemap
 			// Create a sitemap folder
 			mkdir($this->sitemap_folder) or die('Unable to create sitemap folder: '.$this->sitemap_folder);
 		}
-		$this->sitemap_name = $this->current_sitemap();
+		$this->sitemap_uri = $this->sitemap_folder.'/'.$this->current_sitemap();
 		// Check if the sitemap exists
 		if(!file_exists($this->sitemap_uri.".xml"))
 		{
@@ -37,18 +37,18 @@ class GenericSitemap
 		{
 			$this->sitemap_name = $this->increment_sitemap();
 			// // Create the sitemap
-			$this->create_sitemap($this->sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			$this->create_sitemap($this->sitemap_uri) or die("Unable to create the sitemap");
 		}
 		// Append the date to the sitemap
-		$this->append_sitemap($config);
+		$this->append_sitemap($this->sitemap_uri, $config);
 	}
 
 	// Create sitemap function
-	private function create_sitemap()
+	private function create_sitemap($sitemap_uri)
 	{
-		$this->sitemap_uri .= ".xml";
+		$sitemap_uri .= ".xml";
 		// Create the sitemap
-		$open_sitemap_folder = fopen($this->sitemap_uri, "w");
+		$open_sitemap_folder = fopen($sitemap_uri, "w");
 		if(!$open_sitemap_folder) 
 		{
 			// if there was an error
@@ -59,7 +59,7 @@ class GenericSitemap
 		// Create the "empty" sitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
-		$create_xml->asXML($this->sitemap_uri);
+		$create_xml->asXML($sitemap_uri);
 		// Show that it was success
 		return true;
 	}
@@ -93,7 +93,7 @@ class GenericSitemap
 
 	private function increment_sitemap($offset = 1)
 	{
-		$current = $this->current_sitemap($this->sitemap_name, $this->sitemap_folder);
+		$current = $this->current_sitemap();
 
 		preg_match('/(.+)'.'_'.'([0-9]+)$/', $current, $match);
 		return isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $this->sitemap_name.'_'.$offset;
@@ -101,9 +101,9 @@ class GenericSitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	private function append_sitemap($config)
+	private function append_sitemap($sitemap_name, $config)
 	{
-		$sitemap_name = $this->sitemap_name.".xml";
+		$sitemap_name .= ".xml";
 		//Load the XML file
 		$xml = simplexml_load_file($sitemap_name);
 		//Create a node
@@ -113,7 +113,6 @@ class GenericSitemap
 		{
 			$url->addChild($param, $value);
 		}
-
 		//Save the XML
 		$xml->asXML($sitemap_name);
 		return true;
