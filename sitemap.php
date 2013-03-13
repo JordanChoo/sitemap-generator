@@ -104,7 +104,7 @@ class GenericSitemap
 
 	// Make writing the actual file a new function
 		// Config should be the default array
-	public function append_sitemap($sitemap_name, $config)
+	private function append_sitemap($sitemap_name, $config)
 	{
 		$sitemap_name .= ".xml";
 		//Load the XML file
