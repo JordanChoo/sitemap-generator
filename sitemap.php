@@ -15,7 +15,6 @@ class GenericSitemap
 
 	public function sitemap($config)
 	{
-		$url = $config['params']['loc'];
 		// Check if the sitemap folder exists
 		if(!is_dir($this->sitemap_folder))
 		{
