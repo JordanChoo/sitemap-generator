@@ -88,7 +88,8 @@ Just like the default sitemap a core sitemap file is automatically created in th
 				<loc>http://example.com/how-to-have-fun</loc>
 				<image:image>
 					<image:loc>http://www.example.com/1.jpg</image:loc>
-				</image:image></url>
+				</image:image>
+			</url>
 		</urlset>
 
 ```
