@@ -60,7 +60,38 @@ As a note whenever a new sitemap is created the core.xml file will be automatica
 
 ## Images in sitemap
 
+If you'd like to build a sitemap with image files in it, you would do the following:
 
+```php
+
+	$SitemapNode = new Sitemap('SitemapFolder', 'NameOfSitemap', 'image');
+
+	$config = array(
+			'type'   => 'url',
+			'params' => array(
+					'loc'   => 'http://example.com/super-awesome-blog-post',
+					'image' => array(
+							'loc' => 'http://www.example.com/super-awesome-blog-post-image.jpg',
+						),
+				),
+		);
+
+	$SitemapNode->add_node($config);
+```
+
+The results would be the creationg of the following sitemap (assuming that one hasn't been created previously):
+
+```xml
+	<?xml version="1.0"?>
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+			<url>
+				<loc>http://example.com/how-to-have-fun</loc>
+				<image:image>
+					<image:loc>http://www.example.com/1.jpg</image:loc>
+				</image:image></url>
+		</urlset>
+
+```
 
 
 ## Videos in sitemap
