@@ -6,11 +6,12 @@
 class GenericSitemap
 {
 
-	function __construct($sitemap_folder, $sitemap_name)
+	function __construct($sitemap_folder, $sitemap_name, $sitemap_type = 'generic')
 	{
 		$this->sitemap_folder = $sitemap_folder;
 		$this->sitemap_name = $sitemap_name;
 		$this->sitemap_uri = $sitemap_folder."/".$sitemap_name;
+		$this->sitemap_type = $sitemap_type;
 
 		// Check if the sitemap folder exists
 		if(!is_dir($this->sitemap_folder))
@@ -162,29 +163,6 @@ class GenericSitemap
 		$xml->asXML($url);
 		return true;
 	}
-}
-
-/**
-* 
-*/
-class VideoSitemap extends GenericSitemap
-{
-
-
-	function __construct($sitemap_folder, $sitemap_name)
-	{
-		parent::__construct($sitemap_folder, $sitemap_name);
-		// Check if the sitemap exists
-		if(!file_exists($this->sitemap_uri.".xml"))
-		{
-			// Create the sitemap
-			$this->create_image($this->sitemap_uri);
-		}
-		
-		
-
-		return true;
-	}
 
 	private function create_image($sitemap_uri)
 	{
@@ -208,12 +186,8 @@ class VideoSitemap extends GenericSitemap
 		// Show that it was success
 		return true;
 	}
-
-	public function add_image($config)
-	{
-		// Auto scaling goes here
-	}
 }
+
 /**
 * 
 */
