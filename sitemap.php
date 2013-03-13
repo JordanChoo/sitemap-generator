@@ -45,6 +45,15 @@ class GenericSitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 		$create_xml->asXML($sitemap_uri);
+
+		$core = new CoreSitemap('sitemaps', 'CoreSitemap');
+		$core_config = array(
+				'type' => 'sitemap',
+				'params' => array(
+						'loc' => $this->sitemap_uri,
+					),
+			);
+		$core->add_node($core_config);
 		// Show that it was success
 		return true;
 	}
