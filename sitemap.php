@@ -48,14 +48,14 @@ class GenericSitemap
 	{
 		$this->sitemap_uri .= ".xml";
 		// Create the sitemap
-		$open_map = fopen($this->sitemap_uri, "w");
-		if(!$open_map) 
+		$open_sitemap_folder = fopen($this->sitemap_uri, "w");
+		if(!$open_sitemap_folder) 
 		{
 			// if there was an error
 			return false;
 		}
 		// Close the file
-		fclose($open_map );
+		fclose($open_sitemap_folder);
 		// Create the "empty" sitemap
 		$create_xml = new SimpleXMLElement('<urlset></urlset>');
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
