@@ -57,7 +57,7 @@ class GenericSitemap
 						'loc' =>  $this->sitemap_folder."/".$this->sitemap_name,
 					),
 			);
-		$this->add_node($core_config);
+		$this->add_core($core_config);
 		// Show that it was success
 		return true;
 	}
@@ -144,6 +144,23 @@ class GenericSitemap
 		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 		$create_xml->asXML($core_uri);
 		// Show that it was success
+		return true;
+	}
+
+	private function add_core($config)
+	{
+		// Check the # of nodes in the sitemap 
+		$url = $this->sitemap_folder.'/core.xml';
+		$xml = simplexml_load_file($url);
+		//Create a node
+		$node = $xml->addChild($config['type']);
+		// //Set the location of the URL
+		foreach ($config['params'] as $param => $value) 
+		{
+			$node->addChild($param, $value);
+		}
+		//Save the XML
+		$xml->asXML($url);
 		return true;
 	}
 }
