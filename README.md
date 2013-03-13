@@ -6,7 +6,7 @@ To start generating a generic sitemap you can use the following code:
 
 ```php
 
-	$SitemapNode = new GenericSitemap('sitemaps', 'sitemap');
+	$SitemapNode = new GenericSitemap('SitemapFolder', 'NameOfSitemap');
 
 	$config = array(
 			'type' => 'url',
