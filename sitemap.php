@@ -33,10 +33,11 @@ class GenericSitemap
 		$xml = simplexml_load_file($url);
 		$node_count =  $xml->count();
 		// Count the nodes
-		if($node_count >= 50000)
+		if($node_count >= 5)
+		// if($node_count >= 50000)
 		{
-			$this->sitemap_name = $this->increment_sitemap();
-			// // Create the sitemap
+			$this->sitemap_uri = $this->sitemap_folder.'/'.$this->increment_sitemap();
+			// Create the sitemap
 			$this->create_sitemap($this->sitemap_uri) or die("Unable to create the sitemap");
 		}
 		// Append the date to the sitemap
