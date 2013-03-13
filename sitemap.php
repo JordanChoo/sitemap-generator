@@ -5,16 +5,11 @@
 */
 class GenericSitemap
 {
-	// Variables
-		//Just the name of the folder
-		public $sitemap_folder = ""; 
-		//ONLY the name of the sitemap excluding the .xml extension
-		public $sitemap_name = "";
 
-	function __construct()
-	{
-		# code...
-	}
+	// function __construct($config)
+	// {
+	// 	# code...
+	// }
 
 	function sitemap($config)
 	{
@@ -27,15 +22,12 @@ class GenericSitemap
 			// Create a sitemap folder
 			mkdir($sitemap_folder) or die('Unable to create sitemap folder: '.$sitemap_folder);
 		}
-		
 		$sitemap_name = $this->current_sitemap($sitemap_name, $sitemap_folder);
-
-
 		// Check if the sitemap exists
 		if(!file_exists($sitemap_folder.'/'.$sitemap_name.".xml"))
 		{
 			// Create the sitemap
-			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
+			$this->create_sitemap($sitemap_folder.'/'.$sitemap_name);
 		}
 		// Check the # of nodes in the sitemap 
 		$url = $sitemap_folder.'/'.$sitemap_name.'.xml';
@@ -98,6 +90,8 @@ class GenericSitemap
 
 		return $sitemap_name."_".$offset;
 	}
+
+
 	private function increment_sitemap($sitemap_name, $sitemap_folder, $offset = 1)
 	{
 		$current = $this->current_sitemap($sitemap_name, $sitemap_folder);
@@ -130,14 +124,43 @@ class GenericSitemap
 }
 
 /**
-* 
+*<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+*	<sitemap>
+*		<loc>http://www.pornhub.com/sitemap_core.xml</loc>
+*	</sitemap>
+*</sitemapindex>
 */
 class CoreSitemap extends GenericSitemap
 {
-	
-	function __construct($argument)
+
+	function __construct($sitemap_folder, $sitemap_name)
 	{
-		# code...
+		$this->sitemap_folder = $sitemap_folder;
+		$this->sitemap_name = $sitemap_name;
+		$this->sitemap_uri = $sitemap_folder."/".$sitemap_name;
+
+	}
+
+	// Create sitemap function
+	public function create_sitemap()
+	{
+
+		$this->sitemap_uri .= ".xml";
+		// Create the sitemap
+		$open_map = fopen($this->sitemap_uri, "w");
+		if(!$open_map) 
+		{
+			// if there was an error
+			return false;
+		}
+		// Close the file
+		fclose($open_map );
+		// Create the "empty" sitemap
+		$create_xml = new SimpleXMLElement('<sitemapindex></sitemapindex>');
+		$create_xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		$create_xml->asXML($this->sitemap_uri);
+		// Show that it was success
+		return true;
 	}
 }
 
