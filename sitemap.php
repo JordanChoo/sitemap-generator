@@ -134,9 +134,20 @@ class Sitemap
 		//Create a node
 		$node = $xml->addChild($config['type']);
 		// //Set the location of the URL
-		foreach ($config['params'] as $param => $value) 
-		{
-			$node->addChild($param, $value);
+		foreach ($config['params'] as $param => $node_value) 
+		{	
+			if(is_array($node_value))
+			{
+				$newNode = $node->addChild("Test:".$param.":".$param);
+				foreach ($node_value as $key => $namespace_value) {
+
+					$newNode->addChild("Test:".$param.":".$key, $namespace_value);
+
+				}
+			} else{
+				$node->addChild($param, $node_value);	
+			}
+			
 		}
 		//Save the XML
 		$xml->asXML($this->sitemap_uri);
