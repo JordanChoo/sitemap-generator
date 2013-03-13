@@ -40,7 +40,7 @@ class GenericSitemap
 			$this->create_sitemap($this->sitemap_folder.'/'.$sitemap_name) or die("Unable to create the sitemap");
 		}
 		// Append the date to the sitemap
-		$this->append_sitemap($this->sitemap_folder.'/'.$sitemap_name, $config);
+		$this->append_sitemap($config);
 	}
 
 	// Create sitemap function
