@@ -180,24 +180,6 @@ class Sitemap
 		return true;
 	}
 
-	private function create_image($sitemap_uri)
-	{
-		$sitemap_uri .= ".xml";
-		// Create the sitemap
-		$open_map = fopen($sitemap_uri, "w");
-		if(!$open_map) 
-		{
-			// if there was an error
-			return false;
-		}
-		// Close the file
-		fclose($open_map);
-		// Create the "empty" sitemap
-		
-		
-		// Show that it was success
-		return true;
-	}
 }
 
 ?>
