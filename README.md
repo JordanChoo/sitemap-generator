@@ -8,7 +8,7 @@ When creating a sitemap object it accepts three inputs which are
 $sitemap = new Sitemap('FolderOfSitemap', 'NameOfSitemap', 'TypeOfSitemap')
 ```
 NOTE: For the type of sitemap it accepts only three types which are:
-- 'generic'
+- 'generic' // Default value if none given
 - 'video'
 - 'image'
 
