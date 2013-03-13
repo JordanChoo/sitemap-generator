@@ -92,3 +92,39 @@ Just like the default sitemap a core sitemap file is automatically created in th
 
 
 ## Videos in sitemap
+
+
+```php
+	$SitemapNode = new Sitemap('SitemapFolder', 'NameOfSitemap', 'image');
+
+	$config = array(
+			'type'   => 'url',
+			'params' => array(
+					'loc'   => 'http://example.com/cat-playing-with-yarn',
+					'video' => array(
+							'title'         => 'Cat playing with ball of yarn',
+							'thubmnail_loc' => 'http://example.com/cat-playing-with-yarn/image1.jpg',
+							'description'   => 'This adorable cute cat is playing with a big new ball of yarn.',
+						),
+				),
+		);
+
+	$SitemapNode->add_node($config);
+```
+
+The above code will generate the following video sitemap, again if a core sitemap hasn't been created it will be and then the generated video sitemap will be added to it for scaling purposes.
+
+```xml
+	<?xml version="1.0"?>
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+			<url>
+				<loc>http://example.com/cat-playing-with-yarn</loc>
+				<video:video>
+					<video:title>Cat playing with ball of yarn</video:title>
+					<video:thumbnail_loc>http://example.com/cat-playing-with-yarn/image1.jpg</video:thumbnail_loc>
+					<video:description>This adorable cute cat is playing with a big new ball of yarn</video:description>
+				</video:video>
+			</url>
+		</urlset>
+```
