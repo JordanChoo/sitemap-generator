@@ -3,11 +3,17 @@
 namespace SitemapGenerator;
 
 /**
-* 
+* Class Sitemap 
+*
 */
 class Sitemap
 {
-
+	/*
+	* Ensures that the appropriate files and folders are created.
+	* @param string $sitemap_folder
+	* @param string $sitemap_name
+	* @param string $sitemap_type
+	*/
 	function __construct($sitemap_folder, $sitemap_name, $sitemap_type = 'generic')
 	{
 		$this->sitemap_folder = $sitemap_folder;
@@ -36,7 +42,10 @@ class Sitemap
 		}
 	}
 
-	// Create sitemap function
+	/*
+	* Creates a sitemap based on the given URI
+	* @param string $sitemap_uri
+	*/
 	private function create_sitemap($sitemap_uri)
 	{
 		$sitemap_uri .= ".xml";
@@ -80,7 +89,10 @@ class Sitemap
 		return true;
 	}
 
-
+	/*
+	* Returns name of current sitemap
+	* @param int $offset
+	*/
 	private function current_sitemap($offset = 0)
 	{
 		// count the number of sitemaps in the folder with the same name
@@ -106,7 +118,10 @@ class Sitemap
 		return $this->sitemap_name."_".$offset;
 	}
 
-
+	/*
+	* Returns name of current sitemap when incremented by one 
+	* @param int $offset
+	*/
 	private function increment_sitemap($offset = 1)
 	{
 		$current = $this->current_sitemap();
@@ -115,8 +130,10 @@ class Sitemap
 		return isset($match[2]) ? $match[1].'_'.($match[2] + 1) : $this->sitemap_name.'_'.$offset;
 	}
 
-	// Make writing the actual file a new function
-		// Config should be the default array
+	/*
+	* Adds a node to a sitemap
+	* @param array $config 
+	*/
 	public function add_node($config)
 	{
 		// Check the # of nodes in the sitemap 
@@ -155,7 +172,10 @@ class Sitemap
 		$xml->asXML($this->sitemap_uri);
 		return true;
 	}
-
+	/*
+	* Creates a core sitemap in the specified sitemap folder
+	* @param string $sitemap_folder
+	*/
 	private function create_core($sitemap_folder)
 	{
 		$core_uri = $sitemap_folder."/core.xml";
@@ -176,6 +196,10 @@ class Sitemap
 		return true;
 	}
 
+	/*
+	* Adds a sitemap node in the core sitemap
+	* @param array $config
+	*/
 	private function add_core($config)
 	{
 		// Check the # of nodes in the sitemap 
