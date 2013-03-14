@@ -1,4 +1,11 @@
 <?php
+/**
+* This is the description for the class below.
+*
+* @package    sitemap-generator
+* @author     Jordan Choo
+* ...
+*/
 
 namespace SitemapGenerator;
 
