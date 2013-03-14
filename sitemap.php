@@ -45,6 +45,7 @@ class Sitemap
 	/*
 	* Creates a sitemap based on the given URI
 	* @param string $sitemap_uri
+	* @return boolean
 	*/
 	private function create_sitemap($sitemap_uri)
 	{
@@ -92,6 +93,7 @@ class Sitemap
 	/*
 	* Returns name of current sitemap
 	* @param int $offset
+	* @return string
 	*/
 	private function current_sitemap($offset = 0)
 	{
@@ -121,6 +123,7 @@ class Sitemap
 	/*
 	* Returns name of current sitemap when incremented by one 
 	* @param int $offset
+	* @return string
 	*/
 	private function increment_sitemap($offset = 1)
 	{
@@ -133,6 +136,7 @@ class Sitemap
 	/*
 	* Adds a node to a sitemap
 	* @param array $config 
+	* @return boolean
 	*/
 	public function add_node($config)
 	{
@@ -145,7 +149,10 @@ class Sitemap
 		{
 			$this->sitemap_uri = $this->sitemap_folder.'/'.$this->increment_sitemap();
 			// Create the sitemap
-			$this->create_sitemap($this->sitemap_uri) or die("Unable to create the sitemap");
+			if(!$this->create_sitemap($this->sitemap_uri))
+			{
+				return false;
+			}
 		}
 		$this->sitemap_uri .= ".xml";
 		//Load the XML file
@@ -175,6 +182,7 @@ class Sitemap
 	/*
 	* Creates a core sitemap in the specified sitemap folder
 	* @param string $sitemap_folder
+	* @return boolean
 	*/
 	private function create_core($sitemap_folder)
 	{
@@ -199,6 +207,7 @@ class Sitemap
 	/*
 	* Adds a sitemap node in the core sitemap
 	* @param array $config
+	* @return boolean
 	*/
 	private function add_core($config)
 	{
