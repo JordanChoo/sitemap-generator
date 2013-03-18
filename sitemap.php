@@ -7,7 +7,6 @@
 * ...
 */
 
-namespace SitemapGenerator;
 
 /**
 * Class Sitemap 
